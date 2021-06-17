@@ -139,6 +139,9 @@ def maybe_start_new_plot(dir_cfg, sched_cfg, plotting_cfg, log_cfg):
             if plotting_cfg.x:
                 plot_args.append('-x')  
 
+            print(f'****** farm_pk: {plotting_cfg.farmer_pk}')
+            print(f'****** pool_pk: {plotting_cfg.pool_pk}')
+            print(f'****** cfg: {plotting_cfg}')
             logmsg = ('Starting plot job: %s ; logging to %s' % (' '.join(plot_args), log_file_path))
 
             # TODO: CAMPid 09840103109429840981397487498131
@@ -169,16 +172,17 @@ def maybe_start_new_plot(dir_cfg, sched_cfg, plotting_cfg, log_cfg):
             # of the log file will get closed explicitly while still
             # allowing handling of just the log file opening error.
 
-            with open_log_file:
-                # start_new_sessions to make the job independent of this controlling tty (POSIX only).
-                # subprocess.CREATE_NO_WINDOW to make the process independent of this controlling tty and have no console window on Windows.
-                p = subprocess.Popen(plot_args,
-                    stdout=open_log_file,
-                    stderr=subprocess.STDOUT,
-                    start_new_session=True,
-                    creationflags=0 if not _WINDOWS else subprocess.CREATE_NO_WINDOW)
+            #with open_log_file:
+            #    # start_new_sessions to make the job independent of this controlling tty (POSIX only).
+            #    # subprocess.CREATE_NO_WINDOW to make the process independent of this controlling tty and have no console window on Windows.
+            #    p = subprocess.Popen(plot_args,
+            #        stdout=open_log_file,
+            #        stderr=subprocess.STDOUT,
+            #        start_new_session=True,
+            #        creationflags=0 if not _WINDOWS else subprocess.CREATE_NO_WINDOW)
 
-            psutil.Process(p.pid).nice(15 if not _WINDOWS else psutil.BELOW_NORMAL_PRIORITY_CLASS)
+            #psutil.Process(p.pid).nice(15 if not _WINDOWS else psutil.BELOW_NORMAL_PRIORITY_CLASS)
+            print(f'******{logmsg}')
             return (True, logmsg)
 
     return (False, wait_reason)
