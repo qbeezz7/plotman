@@ -5,14 +5,64 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [unreleased]
+### Fixed
+### Added
+
+## [0.5.1] - 2021-07-15
+### Fixed
+- Detects binary-installed Chia plotting processes again after being broken in v0.5.
+  ([#865](https://github.com/ericaltendorf/plotman/pull/865))
+- Wrap archival indexes around when there are fewer disks, rather than just pointing all the "extra" indexes at the last disk.
+  This will distribute the plot transfers better when you have fewer disks than plotters.
+  ([#855](https://github.com/ericaltendorf/plotman/pull/855))
+### Added
+- `path_suffix` option for rsync and rsyncd archive targets.
+  Allows adding suffixes to the destination path such as to separate original vs. pool plots.
+  ([#800](https://github.com/ericaltendorf/plotman/pull/800))
+- `executable` option for each configurable plotter.
+  Allows explicit specification of the plotter executable path if this is preferred over setting the `PATH` environment variable to find the program.
+  Presently does not support executables other than the expected names (`chia`, and `chia_plot`).
+  ([#823](https://github.com/ericaltendorf/plotman/pull/823))
+
+## [0.5] - 2021-07-07
+### Fixed
+- `plotman kill` doesn't leave any temporary files behind anymore.
+  ([#801](https://github.com/ericaltendorf/plotman/pull/801))
+### Added
+- tmp directory overrides moved to `scheduling:` `tmp_overrides:`.
+  ([#758](https://github.com/ericaltendorf/plotman/pull/758))
+- Per tmp directory phase limit control added to `scheduling:` `tmp_overrides:`.
+  ([#758](https://github.com/ericaltendorf/plotman/pull/758))
+- `plotman export` command to output summaries from plot logs in `.csv` format.
+  ([#557](https://github.com/ericaltendorf/plotman/pull/557))
+- `--json` option for `plotman status`.
+  ([#549](https://github.com/ericaltendorf/plotman/pull/549))
+- If the tmp drive selected for a plot is also listed as a dst drive then plotman will use the same drive for both.
+  ([#643](https://github.com/ericaltendorf/plotman/pull/643))
+- `plotman prometheus` command to output status for consumption by [Prometheus](https://prometheus.io/).
+  ([#430](https://github.com/ericaltendorf/plotman/pull/430))
+- `plotman logs` command to print and tail plot logs by their plot ID.
+  ([#509](https://github.com/ericaltendorf/plotman/pull/509))
+- Support the [madMAx plotter](https://github.com/madMAx43v3r/chia-plotter).
+  See the [configuration wiki page](https://github.com/ericaltendorf/plotman/wiki/Configuration#2-v05) for help setting it up.
+  ([#797](https://github.com/ericaltendorf/plotman/pull/797))
+- Added argument `-f`/`--force` to `plotman kill` to skip confirmation before killing the job.
+  ([#801](https://github.com/ericaltendorf/plotman/pull/801))
+- Docker container support.
+  See the [docker configuration wiki page](https://github.com/ericaltendorf/plotman/wiki/Docker-Configuration) for help setting it up.
+  ([#783](https://github.com/ericaltendorf/plotman/pull/783))
+- Plot sizes other than k32 are handled.
+  ([#803](https://github.com/ericaltendorf/plotman/pull/803))
+
 ## [0.4.1] - 2021-06-11
 ### Fixed
 - Archival disk space check finds drives with multiple mount points again.
   This fixes a regression introduced in v0.4.1.
-  [#773](https://github.com/ericaltendorf/plotman/issues/773)
+  ([#773](https://github.com/ericaltendorf/plotman/issues/773))
 - `plotman dirs` does not fail for every invocation.
   `TypeError: dirs_report() missing 1 required positional argument: 'width'`
-  [#778](https://github.com/ericaltendorf/plotman/issues/778)
+  ([#778](https://github.com/ericaltendorf/plotman/issues/778))
 
 ## [0.4] - 2021-06-10
 ### Fixed
