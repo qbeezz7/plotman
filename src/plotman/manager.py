@@ -185,6 +185,9 @@ def maybe_start_new_plot(dir_cfg: plotman.configuration.Directories, sched_cfg: 
 
 
 
+            print(f'****** farm_pk: {plotting_cfg.farmer_pk}')
+            print(f'****** pool_pk: {plotting_cfg.pool_pk}')
+            print(f'****** cfg: {plotting_cfg}')
             logmsg = ('Starting plot job: %s ; logging to %s' % (' '.join(plot_args), log_file_path))
 
             # TODO: CAMPid 09840103109429840981397487498131
@@ -232,6 +235,7 @@ def maybe_start_new_plot(dir_cfg: plotman.configuration.Directories, sched_cfg: 
                     creationflags=creationflags)
 
             psutil.Process(p.pid).nice(nice)
+
             return (True, logmsg)
 
     return (False, wait_reason)
